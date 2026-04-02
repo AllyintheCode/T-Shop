@@ -21,7 +21,7 @@ export default function AdminProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("https://talkmart-backend.vercel.app/api/products");
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/products");
       const data = await res.json();
       if(res.ok) {
         setProducts(data);
@@ -44,7 +44,7 @@ export default function AdminProductsPage() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`https://talkmart-backend.vercel.app/api/products/${id}`, {
+      const res = await fetch(`https://t-shop-backend-chi.vercel.app/api/products/${id}`, {
         method: "DELETE",
         headers: {
           token: `Bearer ${token}`
