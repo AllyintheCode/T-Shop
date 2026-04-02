@@ -62,19 +62,19 @@ export default function Home() {
       try {
         setLoading(true);
         // Products
-        const prodRes = await fetch("http://localhost:5000/api/products");
+        const prodRes = await fetch("https://talkmart-backend.vercel.app/api/products");
         const prodData = await prodRes.json();
         setProducts(prodData);
 
         // Categories
-        const catRes = await fetch("http://localhost:5000/api/categories");
+        const catRes = await fetch("https://talkmart-backend.vercel.app/api/categories");
         const catData = await catRes.json();
         setCategories(catData);
 
         // Wishlist if logged in
         const token = localStorage.getItem("token");
         if (token) {
-          const wishRes = await fetch("http://localhost:5000/api/users/wishlist", {
+          const wishRes = await fetch("https://talkmart-backend.vercel.app/api/users/wishlist", {
             headers: { token: `Bearer ${token}` }
           });
           const wishData = await wishRes.json();
@@ -118,7 +118,7 @@ export default function Home() {
     if (!token) return alert("İstək siyahısı üçün giriş edin!");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/wishlist/${product._id}`, {
+      const res = await fetch(`https://talkmart-backend.vercel.app/api/users/wishlist/${product._id}`, {
         method: "POST",
         headers: { token: `Bearer ${token}` }
       });
@@ -169,7 +169,7 @@ export default function Home() {
 
     try {
       setOrderLoading(true);
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch("https://talkmart-backend.vercel.app/api/orders", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

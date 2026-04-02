@@ -20,7 +20,7 @@ export default function AdminUsersPage() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/users", {
+      const res = await fetch("https://talkmart-backend.vercel.app/api/users", {
         headers: {
           token: `Bearer ${token}`
         }
@@ -46,7 +46,7 @@ export default function AdminUsersPage() {
   const toggleRole = async (userId: string) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/users/${userId}/role`, {
+      const res = await fetch(`https://talkmart-backend.vercel.app/api/users/${userId}/role`, {
         method: "PUT",
         headers: {
           token: `Bearer ${token}`
