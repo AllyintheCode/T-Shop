@@ -20,7 +20,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch("https://talkmart-backend.vercel.app/api/auth/login", {
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

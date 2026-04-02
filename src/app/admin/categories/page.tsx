@@ -24,7 +24,7 @@ export default function AdminCategories() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("https://talkmart-backend.vercel.app/api/categories");
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/categories");
       const data = await res.json();
       setCategories(data);
     } catch (err) {
@@ -45,7 +45,7 @@ export default function AdminCategories() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://talkmart-backend.vercel.app/api/categories", {
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function AdminCategories() {
     if (!confirm("Silmək istədiyinizə əminsiniz?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`https://talkmart-backend.vercel.app/api/categories/${id}`, {
+      const res = await fetch(`https://t-shop-backend-chi.vercel.app/api/categories/${id}`, {
         method: "DELETE",
         headers: { "token": `Bearer ${token}` }
       });

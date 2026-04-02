@@ -21,7 +21,7 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const res = await fetch("https://talkmart-backend.vercel.app/api/auth/register", {
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

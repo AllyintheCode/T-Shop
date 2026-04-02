@@ -19,7 +19,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("https://talkmart-backend.vercel.app/api/categories");
+        const res = await fetch("https://t-shop-backend-chi.vercel.app/api/categories");
         const data = await res.json();
         setCategories(data);
       } catch (err) {
@@ -38,7 +38,7 @@ export default function AdminDashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://talkmart-backend.vercel.app/api/products", {
+      const res = await fetch("https://t-shop-backend-chi.vercel.app/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
