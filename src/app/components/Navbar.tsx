@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
 import {
   ShoppingBag, Search, Menu, Heart, Sun, Moon,
@@ -17,10 +19,21 @@ interface NavbarProps {
   setActiveOverlay: (overlay: 'cart' | 'wishlist' | 'mobileMenu' | null) => void;
 }
 
+
 export default function Navbar({
   theme, toggleTheme, user, handleLogout,
   wishlist, cart, setActiveOverlay
 }: NavbarProps) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border py-4 shadow-sm">
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
@@ -29,10 +42,16 @@ export default function Navbar({
           <span className="font-bold text-2xl text-primary hidden sm:block tracking-tighter">T-Shop</span>
         </Link>
 
-        <div className="hidden lg:flex items-center bg-background border border-border rounded-xl px-4 py-2.5 w-[400px] gap-2 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all">
+        <form onSubmit={handleSearch} className="hidden lg:flex items-center bg-background border border-border rounded-xl px-4 py-2.5 w-[400px] gap-2 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all">
           <Search className="w-5 h-5 text-gray-400" />
-          <input type="text" placeholder="Axtarış..." className="bg-transparent border-none text-foreground w-full outline-none text-sm font-medium" />
-        </div>
+          <input 
+            type="text" 
+            placeholder="Axtarış..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-transparent border-none text-foreground w-full outline-none text-sm font-medium" 
+          />
+        </form>
 
         <div className="flex items-center gap-2 md:gap-4">
           <button onClick={toggleTheme} className="text-foreground hover:text-primary transition-colors p-2.5 hover:bg-primary/5 rounded-xl hidden sm:block" title="Theme">
@@ -67,7 +86,7 @@ export default function Navbar({
             {user ? (
               <div className="flex items-center gap-4">
                 <div className="flex flex-col items-end">
-                  <span className="text-sm font-bold truncate max-w-[120px]">{user.name}</span>
+                  <Link href="/profile" className="text-sm font-bold truncate max-w-[120px] hover:text-primary transition-colors">{user.name}</Link>
                   {user.isAdmin && <Link href="/admin" className="text-[10px] text-primary uppercase font-black tracking-widest hover:underline">Admin Panel</Link>}
                 </div>
                 <button onClick={handleLogout} className="text-gray-400 hover:text-red-500 transition-colors p-2 bg-gray-100 dark:bg-gray-800 rounded-full">

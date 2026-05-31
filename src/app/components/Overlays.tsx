@@ -19,11 +19,15 @@ interface CartOverlayProps {
   onClose: () => void;
 }
 
+import { useRouter } from 'next/navigation';
+
 export function CartOverlay({
   cart, cartTotal, isCheckout, setIsCheckout, orderSuccess, orderLoading,
   shippingAddress, setShippingAddress, handlePlaceOrder, updateCartQuantity,
   removeFromCart, onClose
 }: CartOverlayProps) {
+  const router = useRouter();
+  
   return (
     <OverlayShell icon={<ShoppingCart className="text-primary" />} title={isCheckout ? "Ödəniş" : "Səbətim"} onClose={onClose} isCheckout={isCheckout} setIsCheckout={setIsCheckout}
       footer={cart.length > 0 && !isCheckout && !orderSuccess ? (
@@ -32,8 +36,14 @@ export function CartOverlay({
             <span>Cəmi Məbləğ:</span>
             <span className="text-primary">{cartTotal} AZN</span>
           </div>
-          <button onClick={() => setIsCheckout(true)} className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary-dark transition-all transform hover:-translate-y-1">
-            Sifarişi Tamamla <ArrowRight size={20} />
+          <button 
+            onClick={() => {
+              onClose();
+              router.push('/checkout');
+            }} 
+            className="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary-dark transition-all transform hover:-translate-y-1"
+          >
+            Sifarişi Rəsmiləşdir <ArrowRight size={20} />
           </button>
         </div>
       ) : null}

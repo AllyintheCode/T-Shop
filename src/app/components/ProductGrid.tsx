@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Heart, Search, Crown, ShoppingCart } from "lucide-react";
 import { Product } from "./types";
+import { useRouter } from "next/navigation";
 
 interface ProductGridProps {
   products: Product[];
@@ -15,6 +16,8 @@ interface ProductGridProps {
 
 export default function ProductGrid({ products, selectedCategory, loading, wishlist, toggleWishlist, addToCart }: ProductGridProps) {
   const filteredProducts = selectedCategory ? products.filter(p => p.categories?.includes(selectedCategory)) : products;
+
+  const router = useRouter();
 
   return (
     <>
@@ -44,13 +47,17 @@ export default function ProductGrid({ products, selectedCategory, loading, wishl
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="bg-card border border-border rounded-[2.5rem] flex flex-col group overflow-hidden transition-all hover:shadow-2xl hover:shadow-black/10 hover:border-primary/30 relative"
+                onClick={() => router.push(`/products/${product._id}`)}
+                className="bg-card border border-border rounded-[2.5rem] flex flex-col group overflow-hidden transition-all hover:shadow-2xl hover:shadow-black/10 hover:border-primary/30 relative cursor-pointer"
               >
                 <div className="relative h-80 w-full overflow-hidden bg-background">
                   <img src={product.image} alt="" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-center justify-center">
                     <div className="flex gap-2 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                      <button onClick={() => toggleWishlist(product)} className="bg-white text-black p-4 rounded-2xl shadow-xl hover:bg-primary hover:text-white transition-all transform hover:rotate-6 active:scale-95">
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }} 
+                        className="bg-white text-black p-4 rounded-2xl shadow-xl hover:bg-primary hover:text-white transition-all transform hover:rotate-6 active:scale-95"
+                      >
                         <Heart size={20} className={wishlist.some(item => item._id === product._id) ? "fill-current" : ""} />
                       </button>
                     </div>
@@ -72,7 +79,10 @@ export default function ProductGrid({ products, selectedCategory, loading, wishl
                       <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-0.5">Qiymət</span>
                       <span className="text-3xl font-black text-primary tracking-tighter">{product.price} <span className="text-xs uppercase ml-0.5 tracking-tight">AZN</span></span>
                     </div>
-                    <button onClick={() => addToCart(product)} className="bg-primary text-white p-5 rounded-[1.5rem] hover:bg-primary-dark transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl shadow-primary/20">
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); addToCart(product); }} 
+                      className="bg-primary text-white p-5 rounded-[1.5rem] hover:bg-primary-dark transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl shadow-primary/20"
+                    >
                       <ShoppingCart size={22} />
                     </button>
                   </div>
